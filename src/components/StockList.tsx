@@ -18,13 +18,25 @@ interface stockItem {
 function StockList() {
   const navigate = useNavigate()
 
+  function priceColor(num: number) {
+    if (num < 0) {
+      return {
+        color: 'red'
+      }
+    } else {
+      return {
+        color: 'green'
+      }
+    }
+  }
+
   const {
     data: stocks,
     isLoading,
     isSuccess,
     isError,
     error,
-  } = useGetStocksQuery()
+  } = useGetStocksQuery('/', {pollingInterval: 60000}) // force refetch every 60000 sec
   
   let content
   
@@ -34,19 +46,19 @@ function StockList() {
   else if (isSuccess) {
     content = <div>
       <div className="flex flex-row">
-        <div className="w-[20%] font-bold">
+        <div className="w-[30%] font-bold">
           name
         </div>
-        <div className="w-[20%] text-right font-bold">
+        <div className="w-[17.5%] text-right font-bold">
           symbol
         </div>
-        <div className="w-[20%] text-right font-bold">
-          price
+        <div className="w-[17.5%] text-right font-bold">
+          price (PHP)
         </div>
-        <div className="w-[20%] text-right font-bold">
+        <div className="w-[17.5%] text-right font-bold">
           change
         </div>
-        <div className="w-[20%] text-right font-bold">
+        <div className="w-[17.5%] text-right font-bold">
           volume
         </div>
       </div>
@@ -57,19 +69,19 @@ function StockList() {
             className="flex flex-row cursor-pointer hover:bg-slate-300"
             onClick={() => navigate(`/stocks/${symbol}`)}
           >
-            <div className="w-[20%]">
+            <div className="w-[30%]">
               {name}
             </div>
-            <div className="w-[20%] text-right font-semibold">
+            <div className="w-[17.5%] text-right font-semibold">
               {symbol}
             </div>
-            <div className="w-[20%] text-right">
-              <span>{price.currency} </span><span>{price.amount}</span>
+            <div className="w-[17.5%] text-right">
+              {price.amount}
             </div>
-            <div className="w-[20%] text-right">
+            <div className="w-[17.5%] text-right" style={priceColor(percent_change)}>
               {percent_change}
             </div>
-            <div className="w-[20%] text-right">
+            <div className="w-[17.5%] text-right">
               {volume}
             </div>
           </div>

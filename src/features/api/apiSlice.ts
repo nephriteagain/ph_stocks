@@ -5,7 +5,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({baseUrl: "http://phisix-api.appspot.com"}),
   endpoints: builder => ({
     getStocks: builder.query({
-      query: () => '/stocks.json'
+      query: (param) => `${param}stocks.json`    
     }),
     getStock: builder.query({
       query: stockSymbol => `stocks/${stockSymbol}.json`

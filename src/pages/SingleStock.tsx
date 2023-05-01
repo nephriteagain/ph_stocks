@@ -18,6 +18,7 @@ function SingleStock() {
     content = <div>Loading...</div>
   } 
   else if (isSuccess) {
+    console.log(stock)
     content = <div>{JSON.stringify(stock)}</div>
   
   }
